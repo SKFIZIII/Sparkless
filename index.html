@@ -11,6 +11,19 @@
       --stardust: #e0d3ff;
     }
 
+    /* Верхняя анимация с печеньками */
+    .top-cookies {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20vh;
+      pointer-events: none;
+      z-index: 999;
+      filter: blur(1px);
+      opacity: 0.7;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -21,7 +34,6 @@
       position: relative;
     }
 
-    /* Анимированный фон с печеньками */
     .cookie-background {
       position: fixed;
       top: 0;
@@ -36,9 +48,9 @@
     .cookie {
       position: absolute;
       opacity: 0.08;
-      font-size: 24px;
       animation: float 12s linear infinite;
       text-shadow: 0 0 15px rgba(199, 121, 255, 0.3);
+      filter: hue-rotate(calc(var(--i) * 50deg));
     }
 
     @keyframes float {
@@ -46,7 +58,6 @@
       100% { transform: translateY(110vh) translateX(10%) rotate(360deg); }
     }
 
-    /* Анимации */
     @keyframes cosmicFlow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -74,7 +85,26 @@
       }
     }
 
-    /* Стили заголовка */
+    /* Стили для футера */
+    .neon-footer {
+      background: linear-gradient(45deg, #1a001f, #300060);
+      padding: 2rem;
+      margin-top: 4rem;
+      position: relative;
+      border-top: 3px solid var(--neon-purple);
+      box-shadow: 0 0 40px var(--neon-purple);
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      color: var(--stardust);
+      text-shadow: 0 0 10px var(--neon-purple);
+      animation: neonPulse 2s ease-in-out infinite;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
     header {
       padding: 4rem 2rem;
       background: linear-gradient(45deg, #1a001f, #300060);
@@ -90,7 +120,6 @@
       animation: neonPulse 2s ease-in-out infinite;
     }
 
-    /* Основное изображение */
     .main-image-frame {
       border: 4px solid var(--neon-purple);
       border-radius: 15px;
@@ -112,7 +141,6 @@
       transition: transform 0.4s;
     }
 
-    /* Карточки */
     .cards-container {
       display: flex;
       justify-content: center;
@@ -188,7 +216,6 @@
       transform: translateY(-5px);
     }
 
-    /* Кнопки */
     .bot-button {
       display: block;
       width: 100%;
@@ -230,7 +257,6 @@
       box-shadow: 0 0 25px #ff4df8;
     }
 
-    /* Игровой блок */
     .game-container {
       padding: 2rem;
       background: rgba(21, 0, 32, 0.9);
@@ -272,7 +298,6 @@
       transform: scale(1.1);
     }
 
-    /* Контакты */
     .contacts {
       display: flex;
       justify-content: center;
@@ -304,19 +329,40 @@
   </style>
 </head>
 <body>
-  <!-- Фон с анимированными печеньками -->
+  <!-- Верхняя анимация -->
+  <div class="top-cookies">
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('.top-cookies');
+        for(let i = 0; i < 30; i++) {
+          const cookie = document.createElement('div');
+          cookie.className = 'cookie';
+          cookie.innerHTML = '🍪';
+          cookie.style.setProperty('--i', i);
+          cookie.style.left = Math.random() * 100 + '%';
+          cookie.style.animation = `float ${8 + Math.random() * 10}s linear infinite`;
+          cookie.style.animationDelay = Math.random() * 5 + 's';
+          cookie.style.fontSize = 20 + Math.random() * 25 + 'px';
+          container.appendChild(cookie);
+        }
+      });
+    </script>
+  </div>
+
+  <!-- Фон с печеньками -->
   <div class="cookie-background">
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const container = document.querySelector('.cookie-background');
-        for(let i = 0; i < 50; i++) {
+        for(let i = 0; i < 100; i++) {
           const cookie = document.createElement('div');
           cookie.className = 'cookie';
           cookie.innerHTML = '🍪';
+          cookie.style.setProperty('--i', i);
           cookie.style.left = Math.random() * 100 + '%';
-          cookie.style.animationDelay = Math.random() * 15 + 's';
-          cookie.style.animationDuration = 8 + Math.random() * 10 + 's';
-          cookie.style.fontSize = 10 + Math.random() * 30 + 'px';
+          cookie.style.animationDelay = Math.random() * 20 + 's';
+          cookie.style.animationDuration = 6 + Math.random() * 12 + 's';
+          cookie.style.fontSize = 12 + Math.random() * 36 + 'px';
           container.appendChild(cookie);
         }
       });
@@ -406,8 +452,17 @@
     </div>
   </div>
 
+  <!-- Новый футер -->
+  <footer class="neon-footer">
+    <div class="footer-text">
+      ✨ Сайт создан 28.05.2025 | Все права защищены | Патент № SPARKL-228-2025<br>
+      Любое копирование материалов преследуется по закону галактической конфедерации<br>
+      Связь с адвокатами: <span style="color: var(--neon-purple);">@klassifik</span>
+    </div>
+  </footer>
+
   <script>
-    // Игровой код
+    // ... (существующий JavaScript код игры остается без изменений) ...
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const gridSize = 20;
@@ -489,12 +544,13 @@
     }
 
     function drawFruit() {
-      ctx.font = '30px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = '20px Arial';
       ctx.fillStyle = fruit.color;
-      ctx.fillText(fruit.emoji, fruit.x + 5, fruit.y + 25);
+      ctx.fillText(fruit.emoji, fruit.x + gridSize/2, fruit.y + gridSize/2);
     }
 
-    // Управление
     document.addEventListener('keydown', (e) => {
       if (!gameActive) return;
       switch(e.key) {
@@ -523,7 +579,6 @@
       });
     });
 
-    // Анимации при наведении
     document.querySelectorAll('.contact-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -537,7 +592,6 @@
       });
     });
 
-    // Параллакс-эффект при скролле
     document.addEventListener('scroll', () => {
       const scrolled = window.pageYOffset;
       document.querySelector('.cookie-background').style.transform = 
