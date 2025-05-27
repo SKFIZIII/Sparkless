@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✨ 𝙨𝙥𝙖𝙧𝙠𝙡𝙨𝙝𝙤𝙥 — Куки Шоп</title>
+  <style>
+    :root {
+      --neon-purple: #c779ff;
+      --deep-space: #0b0014;
+      --stardust: #e0d3ff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--deep-space);
+      color: var(--stardust);
+      text-align: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Анимированный фон с печеньками */
+    .cookie-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(1px);
+    }
+
+    .cookie {
+      position: absolute;
+      opacity: 0.08;
+      font-size: 24px;
+      animation: float 12s linear infinite;
+      text-shadow: 0 0 15px rgba(199, 121, 255, 0.3);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(-10vh) translateX(-10%) rotate(0deg); }
+      100% { transform: translateY(110vh) translateX(10%) rotate(360deg); }
+    }
+
+    /* Анимации */
+    @keyframes cosmicFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes floating {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes neonPulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(50px) rotateX(90deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+      }
+    }
+
+    /* Стили заголовка */
+    header {
+      padding: 4rem 2rem;
+      background: linear-gradient(45deg, #1a001f, #300060);
+      animation: cosmicFlow 15s ease infinite;
+      background-size: 400% 400%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .neon-text {
+      color: var(--neon-purple);
+      text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple), 0 0 40px #ff4df8;
+      animation: neonPulse 2s ease-in-out infinite;
+    }
+
+    /* Основное изображение */
+    .main-image-frame {
+      border: 4px solid var(--neon-purple);
+      border-radius: 15px;
+      width: 320px;
+      margin: 2rem auto;
+      box-shadow: 0 0 40px var(--neon-purple);
+      transition: 0.4s;
+      transform-style: preserve-3d;
+      animation: cardEntrance 1s ease-out;
+    }
+
+    .main-image-frame:hover {
+      transform: perspective(1000px) rotateY(10deg) rotateX(5deg) scale(1.05);
+    }
+
+    .main-img {
+      width: 100%;
+      border-radius: 10px;
+      transition: transform 0.4s;
+    }
+
+    /* Карточки */
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin: 4rem 0;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      perspective: 1000px;
+      width: 300px;
+      transition: transform 0.4s;
+      animation: cardEntrance 0.6s ease-out backwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.2s; }
+    .card:nth-child(2) { animation-delay: 0.4s; }
+    .card:nth-child(3) { animation-delay: 0.6s; }
+
+    .card:hover {
+      transform: translateY(-10px) rotateZ(1deg);
+    }
+
+    .card-frame {
+      border: 3px solid var(--neon-purple);
+      border-radius: 15px;
+      padding: 15px;
+      background: rgba(21, 0, 32, 0.9);
+      box-shadow: 0 0 35px var(--neon-purple);
+      transform-style: preserve-3d;
+      transition: all 0.4s;
+    }
+
+    .card:hover .card-frame {
+      transform: rotateY(10deg) rotateX(5deg);
+      box-shadow: 0 0 50px var(--neon-purple);
+    }
+
+    .card-image-container {
+      position: relative;
+      height: 250px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid var(--neon-purple);
+      box-shadow: 0 0 25px var(--neon-purple);
+    }
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .card:hover .card-image {
+      transform: scale(1.05) rotate(0.5deg);
+    }
+
+    .image-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(11,0,20,0.9));
+      padding: 1rem;
+      color: white;
+      font-size: 1.2rem;
+      text-shadow: 0 0 10px var(--neon-purple);
+      transition: 0.4s;
+    }
+
+    .card:hover .image-overlay {
+      transform: translateY(-5px);
+    }
+
+    /* Кнопки */
+    .bot-button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg, #ff4df8, #c779ff);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      margin-top: 15px;
+    }
+
+    .bot-button::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, 
+        transparent, 
+        rgba(255,255,255,0.2), 
+        transparent);
+      transform: rotate(45deg);
+      animation: buttonFlow 3s infinite linear;
+    }
+
+    @keyframes buttonFlow {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    .bot-button:hover {
+      transform: scale(1.05) rotateZ(2deg);
+      box-shadow: 0 0 25px #ff4df8;
+    }
+
+    /* Игровой блок */
+    .game-container {
+      padding: 2rem;
+      background: rgba(21, 0, 32, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin: 2rem auto;
+      max-width: 800px;
+      box-shadow: 0 0 50px var(--neon-purple);
+      animation: floating 4s ease-in-out infinite;
+    }
+
+    #gameCanvas {
+      background: #1a001f;
+      box-shadow: 0 0 30px #8a2be2;
+      border: 2px solid #a64dff;
+      border-radius: 10px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 200px;
+      margin: 1rem auto;
+    }
+
+    .control-btn {
+      background: linear-gradient(135deg, #a64dff, #d47eff);
+      border: none;
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #c96bff;
+      transition: 0.3s;
+    }
+
+    .control-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Контакты */
+    .contacts {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin: 4rem 0;
+      flex-wrap: wrap;
+    }
+
+    .contact-card {
+      perspective: 1000px;
+      transition: 0.4s;
+    }
+
+    .neon-frame {
+      border: 3px solid var(--neon-purple);
+      border-radius: 15px;
+      padding: 10px;
+      box-shadow: 0 0 25px var(--neon-purple);
+      transition: 0.4s;
+      background: #150020;
+    }
+
+    .contact-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <!-- Фон с анимированными печеньками -->
+  <div class="cookie-background">
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('.cookie-background');
+        for(let i = 0; i < 50; i++) {
+          const cookie = document.createElement('div');
+          cookie.className = 'cookie';
+          cookie.innerHTML = '🍪';
+          cookie.style.left = Math.random() * 100 + '%';
+          cookie.style.animationDelay = Math.random() * 15 + 's';
+          cookie.style.animationDuration = 8 + Math.random() * 10 + 's';
+          cookie.style.fontSize = 10 + Math.random() * 30 + 'px';
+          container.appendChild(cookie);
+        }
+      });
+    </script>
+  </div>
+
+  <header>
+    <h1 class="neon-text">Добро пожаловать на сайт Куки Шопа <span style="font-family: sans-serif;">𝙨𝙥𝙖𝙧𝙠𝙡𝙨𝙝𝙤𝙥</span></h1>
+    <div class="main-image-frame">
+      <img src="https://i.ibb.co/23rw1tqV/photo-2025-05-04-20-10-07.jpg" 
+           class="main-img" 
+           alt="Главное фото">
+    </div>
+  </header>
+
+  <div class="cards-container">
+    <div class="card">
+      <div class="card-frame">
+        <div class="card-image-container">
+          <img src="https://i.ibb.co/mF8sS0Bd/image.png" 
+               class="card-image" 
+               alt="Чекер">
+          <div class="image-overlay">Лучший куки чекер</div>
+        </div>
+        <a href="https://t.me/sparklchecker_bot" class="bot-button" target="_blank">Открыть бота</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-frame">
+        <div class="card-image-container">
+          <img src="https://i.ibb.co/gMnbmtCh/image.png" 
+               class="card-image" 
+               alt="Шоп">
+          <div class="image-overlay">Лучший шоп куков</div>
+        </div>
+        <a href="https://t.me/sparklshop_bot" class="bot-button" target="_blank">Перейти в шоп</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-frame">
+        <div class="card-image-container">
+          <img src="https://i.ibb.co/7NjjVczR/image.png" alt="image" 
+               class="card-image" 
+               alt="Roblox">
+          <div class="image-overlay">Roblox чат</div>
+        </div>
+        <a href="https://t.me/sparkshopcookie" class="bot-button" target="_blank">Присоединиться</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="game-container">
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div class="controls">
+      <div></div>
+      <button class="control-btn" id="upBtn">↑</button>
+      <div></div>
+      <button class="control-btn" id="leftBtn">←</button>
+      <button class="control-btn" id="downBtn">↓</button>
+      <button class="control-btn" id="rightBtn">→</button>
+    </div>
+    <div style="margin-top: 2rem;">
+      <button class="bot-button" id="startButton">Начать игру</button>
+      <button class="bot-button" id="stopButton">Стоп</button>
+    </div>
+  </section>
+
+  <div class="contacts">
+    <div class="contact-card">
+      <div class="neon-frame">
+        <img src="https://i.ibb.co/JRnDsr1q/photo-2025-05-27-15-58-14.jpg" 
+             class="contact-photo" 
+             alt="Владелец">
+      </div>
+      <a href="https://t.me/russiasbuyer" class="bot-button" target="_blank">Владелец</a>
+    </div>
+    
+    <div class="contact-card">
+      <div class="neon-frame">
+        <img src="https://i.ibb.co/TD3Zb7BC/photo-2025-04-30-17-12-45.jpg" 
+             class="contact-photo" 
+             alt="Разработчик">
+      </div>
+      <a href="https://t.me/dortosex" class="bot-button" target="_blank">Разработчик</a>
+    </div>
+  </div>
+
+  <script>
+    // Игровой код
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const gridSize = 20;
+    const gameSpeed = 220;
+    
+    let snake = [];
+    let dx = 0;
+    let dy = 0;
+    let fruit = null;
+    let score = 0;
+    let gameActive = false;
+    let gameInterval;
+
+    const fruits = [
+      { emoji: '🍎', color: '#FF0000' },
+      { emoji: '🍌', color: '#FFD700' },
+      { emoji: '🍇', color: '#6A0DAD' },
+      { emoji: '🍊', color: '#FFA500' }
+    ];
+
+    function initGame() {
+      snake = [{ x: 200, y: 200 }];
+      dx = gridSize;
+      dy = 0;
+      score = 0;
+      fruit = spawnFruit();
+      gameActive = true;
+      clearInterval(gameInterval);
+      gameInterval = setInterval(gameLoop, gameSpeed);
+    }
+
+    function drawSnake() {
+      ctx.fillStyle = '#d47eff';
+      snake.forEach(segment => {
+        ctx.fillRect(segment.x, segment.y, gridSize - 2, gridSize - 2);
+      });
+    }
+
+    function spawnFruit() {
+      const { emoji, color } = fruits[Math.floor(Math.random() * fruits.length)];
+      return {
+        x: Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize,
+        y: Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize,
+        emoji,
+        color
+      };
+    }
+
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+      snake.unshift(head);
+
+      if (head.x === fruit.x && head.y === fruit.y) {
+        fruit = spawnFruit();
+        score++;
+      } else {
+        snake.pop();
+      }
+
+      if (isCollision()) {
+        gameActive = false;
+        clearInterval(gameInterval);
+        alert(`Игра окончена! Счёт: ${score}`);
+      }
+
+      drawFruit();
+      drawSnake();
+    }
+
+    function isCollision() {
+      const head = snake[0];
+      return (
+        head.x < 0 || head.x >= canvas.width ||
+        head.y < 0 || head.y >= canvas.height ||
+        snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
+      );
+    }
+
+    function drawFruit() {
+      ctx.font = '30px Arial';
+      ctx.fillStyle = fruit.color;
+      ctx.fillText(fruit.emoji, fruit.x + 5, fruit.y + 25);
+    }
+
+    // Управление
+    document.addEventListener('keydown', (e) => {
+      if (!gameActive) return;
+      switch(e.key) {
+        case 'ArrowUp': if (dy === 0) { dx = 0; dy = -gridSize; } break;
+        case 'ArrowDown': if (dy === 0) { dx = 0; dy = gridSize; } break;
+        case 'ArrowLeft': if (dx === 0) { dx = -gridSize; dy = 0; } break;
+        case 'ArrowRight': if (dx === 0) { dx = gridSize; dy = 0; } break;
+      }
+    });
+
+    document.getElementById('startButton').addEventListener('click', initGame);
+    document.getElementById('stopButton').addEventListener('click', () => {
+      gameActive = false;
+      clearInterval(gameInterval);
+    });
+
+    ['up', 'down', 'left', 'right'].forEach(direction => {
+      document.getElementById(`${direction}Btn`).addEventListener('click', () => {
+        if (!gameActive) return;
+        switch(direction) {
+          case 'up': if (dy === 0) { dx = 0; dy = -gridSize; } break;
+          case 'down': if (dy === 0) { dx = 0; dy = gridSize; } break;
+          case 'left': if (dx === 0) { dx = -gridSize; dy = 0; } break;
+          case 'right': if (dx === 0) { dx = gridSize; dy = 0; } break;
+        }
+      });
+    });
+
+    // Анимации при наведении
+    document.querySelectorAll('.contact-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(1000px) rotateY(${x * 20}deg) rotateX(${y * -20}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'none';
+      });
+    });
+
+    // Параллакс-эффект при скролле
+    document.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      document.querySelector('.cookie-background').style.transform = 
+        `translateY(${scrolled * 0.5}px)`;
+    });
+  </script>
+</body>
+</html>
